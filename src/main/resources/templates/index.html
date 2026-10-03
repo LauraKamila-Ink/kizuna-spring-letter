@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kizuna Letter ✨</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+    <!-- Front Leafs -->
+    <div class="foliage-overlay">
+        <img th:src="@{/images/falling-leaf.png}" alt="Hojitas">
+    </div>
+
+    <!-- Background Audio -->
+    <audio id="bg-music" loop>
+        <source th:src="@{/audio/background-music.mp3}" type="audio/mpeg">
+    </audio>
+
+    <!-- SCREEN 1: LANDING PAGE -->
+    <section id="landing-screen" class="screen">
+        <div class="landing-group">
+            <img th:src="@{/images/character-body.png}" alt="Character Body" class="character-body">
+            
+            <button id="start-btn" class="interactive-button" onclick="enterApp()">
+                <img th:src="@{/images/click-button.png}" alt="Click Here">
+            </button>
+            
+            <img th:src="@{/images/character-legs.png}" alt="Character Legs" class="character-legs">
+        </div>
+    </section>
+
+    <!-- SCREEN 2: MAIN MENU -->
+    <section id="menu-screen" class="screen hidden">
+        <div class="couple-container">
+            <img th:src="@{/images/dancing-couple.png}" alt="Dancing Couple" class="dancing-couple">
+        </div>
+
+        <nav class="menu-navigation">
+            <button class="menu-btn" onclick="openSection('letter')">
+                <img th:src="@{/images/btn-letter.png}" alt="Letter">
+            </button>
+            <button class="menu-btn" onclick="openSection('songs')">
+                <img th:src="@{/images/btn-songs.png}" alt="Favorite Songs">
+            </button>
+            <button class="menu-btn" onclick="openSection('reasons')">
+                <img th:src="@{/images/btn-reasons.png}" alt="Reasons to Love">
+            </button>
+            <button class="menu-btn" onclick="openSection('counter')">
+                <img th:src="@{/images/btn-counter.png}" alt="Time Together Counter">
+            </button>
+        </nav>
+    </section>
+
+    <!-- JavaScript Navigation -->
+    <script>
+        function enterApp() {
+            const music = document.getElementById('bg-music');
+            if (music) {
+                music.play().catch(err => console.log("Audio play prevented:", err));
+            }
+
+            const landing = document.getElementById('landing-screen');
+            const menu = document.getElementById('menu-screen');
+
+            landing.classList.add('hidden');
+            setTimeout(() => {
+                menu.classList.remove('hidden');
+            }, 400);
+        }
+
+        function openSection(sectionName) {
+            console.log("Opening section:", sectionName);
+        }
+    </script>
+
+</body>
+</html>
