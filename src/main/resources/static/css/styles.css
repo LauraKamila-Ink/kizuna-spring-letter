@@ -52,9 +52,7 @@ body {
     animation: gentleSwayHorizontal 6s ease-in-out infinite;
 }
 
-/* ====================================================
-   FALLING LEAVES PARTICLES ACROSS ALL SCREENS
-   ==================================================== */
+/*FALLING LEAVES PARTICLES ACROSS ALL SCREENS*/
 
 .leaves-container {
     position: fixed;
@@ -162,6 +160,9 @@ body {
 .character-legs {
     z-index: 3;
     pointer-events: none;
+    transform-origin: top center 15%;
+    margin-top: -10px;
+    animation: balanceoPiernaSentada 2s ease-in-out infinite;
 }
 
 /* Principal button */
@@ -188,8 +189,8 @@ body {
 }
 
 .interactive-button:hover {
-    transform: scale(1.04);
-    filter: brightness(1.1);
+    transform: translateY(-2px) scale(1.04);
+    filter: drop-shadow(0px 4px 8px rgba(237, 216, 131, 0.4));
 }
 
 /*  SCREEN 2: MAIN MENU*/
@@ -260,7 +261,7 @@ body {
 
 .menu-btn:hover {
     transform: translateY(-2px) scale(1.04);
-    filter: drop-shadow(0px 4px 8px rgba(255, 180, 180, 0.4));
+    filter: drop-shadow(0px 4px 8px rgba(237, 216, 131, 0.4));
 }
 
 /* SCREEN 3: FAVORITE SONGS - ORIENTAL SCROLL STYLE */
@@ -852,6 +853,19 @@ body {
     }
     50% {
         transform: translateY(-5px);
+    }
+}
+
+
+@keyframes balanceoPiernaSentada {
+    0% {
+        transform: rotate(1deg);
+    }
+    50% {
+        transform: rotate(-2deg);
+    }
+    100% {
+        transform: rotate(1deg);
     }
 }
 
