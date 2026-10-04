@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kizuna Letter ✨</title>
+    <!-- Google Fonts: Oriental Calligraphy & Japanese Style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Ma+Shan+Zheng&family=Noto+Serif+JP:wght@400;600;700&family=Yuji+Boku&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
     <!-- Front Leafs -->
     <div class="foliage-overlay">
-        <img th:src="@{/images/falling-leaf.png}" alt="Hojitas">
+        <img th:src="@{/images/falling-leaf.png}" alt="Leaves">
     </div>
+
+    <!-- Falling Leaves Across All Screens -->
+    <div id="leaves-container" class="leaves-container" aria-hidden="true"></div>
 
     <!-- Background Audio -->
     <audio id="bg-music" loop>
@@ -53,6 +60,161 @@
         </nav>
     </section>
 
+    <!-- SCREEN 3: FAVORITE SONGS -->
+    <section id="songs-screen" class="screen hidden">
+        <!-- Left space for user illustration / artwork -->
+        <div class="songs-art-zone">
+            <!-- When you have your drawing, simply uncomment this line and set your path:
+                 <img th:src="@{/images/your-artwork.png}" alt="Songs Illustration" class="songs-art-img">
+            -->
+            <div class="art-placeholder">
+                <span class="art-kanji">音</span>
+                <span class="art-label">Your artwork here</span>
+            </div>
+        </div>
+
+        <main class="songs-panel">
+            <button class="back-btn" type="button" onclick="showScreen('menu-screen')">← Menu</button>
+            <h1>Our Songs</h1>
+            <p class="songs-intro">These songs fill you with determination.</p>
+
+            <div class="songs-list">
+                <article class="scroll-card" th:each="song, iter : ${songs}" th:id="'song-card-' + ${iter.index}">
+                    <!-- Left wood and bronze rod with tassel -->
+                    <div class="scroll-rod rod-left">
+                        <span class="rod-cap top"></span>
+                        <div class="rod-wood"></div>
+                        <span class="rod-cap bottom"></span>
+                        <div class="chinese-tassel">
+                            <span class="tassel-string"></span>
+                            <span class="tassel-knot"></span>
+                            <span class="tassel-fringe"></span>
+                        </div>
+                    </div>
+
+                    <!-- Center scroll body of silk / rice paper -->
+                    <div class="scroll-body">
+                        <div class="scroll-border-top"></div>
+                        
+                        <div class="scroll-inner">
+                            <!-- Imperial red seal (Play / Pause button) -->
+                            <button class="seal-play-btn" type="button" th:data-index="${iter.index}" onclick="toggleSongPlay(this)" title="Play">
+                                <span class="seal-icon" th:id="'icon-' + ${iter.index}">▶</span>
+                                <span class="seal-character">奏</span>
+                            </button>
+
+                            <!-- Song details and silk progress bar -->
+                            <div class="scroll-details">
+                                <div class="song-header">
+                                    <h2 class="song-title" th:text="${song.title}">Song Title</h2>
+                                    <span class="time-display" th:id="'time-' + ${iter.index}">00:00 / 00:00</span>
+                                </div>
+
+                                <!-- Custom silk thread style progress bar -->
+                                <div class="silk-progress-bar" th:data-index="${iter.index}" onclick="seekSong(event, this)">
+                                    <div class="silk-track">
+                                        <div class="silk-fill" th:id="'fill-' + ${iter.index}"></div>
+                                        <div class="silk-bead" th:id="'bead-' + ${iter.index}"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden native audio element -->
+                            <audio th:id="'audio-' + ${iter.index}" preload="metadata"
+                                   th:data-index="${iter.index}"
+                                   onplay="handleSongPlay(this)"
+                                   onpause="handleSongPause(this)"
+                                   ontimeupdate="handleTimeUpdate(this)"
+                                   onloadedmetadata="handleMetadataLoaded(this)"
+                                   onended="handleSongEnded(this)">
+                                <source th:src="@{${song.filePath}}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <div class="scroll-border-bottom"></div>
+                    </div>
+
+                    <!-- Right wood and bronze rod -->
+                    <div class="scroll-rod rod-right">
+                        <span class="rod-cap top"></span>
+                        <div class="rod-wood"></div>
+                        <span class="rod-cap bottom"></span>
+                    </div>
+                </article>
+                <p class="empty-songs" th:if="${#lists.isEmpty(songs)}">Our favorite songs will be added soon.</p>
+            </div>
+        </main>
+    </section>
+
+    <!-- SCREEN 4: TIME TOGETHER COUNTER (JAPANESE CLOCK / ORIENTAL COUNTER) -->
+    <section id="counter-screen" class="screen hidden">
+        <div class="counter-container">
+            <!-- UPPER PART: Traditional Japanese Clock / Kizuna Clock -->
+            <div class="japanese-clock-box">
+                <div class="clock-nav">
+                    <button class="back-btn" type="button" onclick="showScreen('menu-screen')">← Menu</button>
+                    <div class="clock-torii-header">
+                        <span class="clock-title-kanji">絆の時</span>
+                        <span class="clock-title-roman">TIME TOGETHER</span>
+                    </div>
+                </div>
+
+                <!-- Clock Face / Total Days Counter -->
+                <div class="clock-face">
+                    <div class="clock-center">
+                        <div class="clock-days-total">
+                            <span class="days-number" id="live-days-count" th:text="${daysTogether}">2880</span>
+                            <span class="days-label">DAYS TOGETHER · 日々</span>
+                        </div>
+                        
+                        <!-- Detailed Live Counter: Years, Months, Days, Hours, Minutes, Seconds -->
+                        <div class="clock-units-wrapper">
+                            <div class="clock-unit-item">
+                                <span class="unit-val" id="clock-years">0</span>
+                                <span class="unit-tag">YEARS / 年</span>
+                            </div>
+                            <div class="clock-unit-item">
+                                <span class="unit-val" id="clock-months">0</span>
+                                <span class="unit-tag">MONTHS / 月</span>
+                            </div>
+                            <div class="clock-unit-item">
+                                <span class="unit-val" id="clock-days">0</span>
+                                <span class="unit-tag">DAYS / 日</span>
+                            </div>
+                            <div class="clock-unit-item">
+                                <span class="unit-val" id="clock-hours">00</span>
+                                <span class="unit-tag">HOURS / 時</span>
+                            </div>
+                            <div class="clock-unit-item">
+                                <span class="unit-val" id="clock-minutes">00</span>
+                                <span class="unit-tag">MIN / 分</span>
+                            </div>
+                            <div class="clock-unit-item unit-seconds">
+                                <span class="unit-val" id="clock-seconds">00</span>
+                                <span class="unit-tag">SEC / 秒</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clock-footer-text">
+                    <span>🌸 Together since May 14, 2018 · Every second strengthens our bond 🌸</span>
+                </div>
+            </div>
+
+            <!-- BOTTOM PART: Reserved space for user artwork / illustration -->
+            <div class="counter-art-zone">
+                <!-- When you have your illustration, place it here:
+                     <img th:src="@{/images/your-illustration.png}" alt="Illustration" class="counter-art-img">
+                -->
+                <div class="art-placeholder-bottom">
+                    <span class="art-placeholder-text">Reserved space for your illustration</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- JavaScript Navigation -->
     <script>
         function enterApp() {
@@ -71,8 +233,269 @@
         }
 
         function openSection(sectionName) {
-            console.log("Opening section:", sectionName);
+            if (sectionName === 'songs') {
+                showScreen('songs-screen');
+            } else if (sectionName === 'counter') {
+                showScreen('counter-screen');
+            } else {
+                console.log("Opening section:", sectionName);
+            }
         }
+
+        function showScreen(screenId) {
+            // Pause any scroll song currently playing
+            if (screenId !== 'songs-screen') {
+                pauseAllSongs();
+            }
+
+            // Resume ambient background music when returning to the main menu
+            if (screenId === 'menu-screen') {
+                const bgMusic = document.getElementById('bg-music');
+                if (bgMusic && bgMusic.paused) {
+                    bgMusic.play().catch(err => console.log("Bg music resume prevented:", err));
+                }
+            }
+
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        // ============================================
+        // SCROLL PLAYER LOGIC
+        // ============================================
+
+        function formatTime(seconds) {
+            if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function toggleSongPlay(btn) {
+            const index = btn.getAttribute('data-index');
+            const audio = document.getElementById(`audio-${index}`);
+            if (!audio) return;
+
+            if (audio.paused) {
+                // Pause any other active song
+                pauseAllSongs(audio);
+
+                // Pause ambient background music to listen to the song
+                const bgMusic = document.getElementById('bg-music');
+                if (bgMusic && !bgMusic.paused) {
+                    bgMusic.pause();
+                }
+
+                audio.play().catch(err => console.log("Audio play error:", err));
+            } else {
+                audio.pause();
+            }
+        }
+
+        function pauseAllSongs(exceptAudio = null) {
+            document.querySelectorAll('audio[id^="audio-"]').forEach(audio => {
+                if (audio !== exceptAudio && !audio.paused) {
+                    audio.pause();
+                }
+            });
+        }
+
+        function handleSongPlay(audio) {
+            const index = audio.getAttribute('data-index');
+            const icon = document.getElementById(`icon-${index}`);
+            const card = document.getElementById(`song-card-${index}`);
+            const btn = card ? card.querySelector('.seal-play-btn') : null;
+            const char = btn ? btn.querySelector('.seal-character') : null;
+
+            if (icon) icon.textContent = '❚❚';
+            if (char) char.textContent = '止'; // Traditional kanji for pause / stop
+            if (card) card.classList.add('playing');
+        }
+
+        function handleSongPause(audio) {
+            const index = audio.getAttribute('data-index');
+            const icon = document.getElementById(`icon-${index}`);
+            const card = document.getElementById(`song-card-${index}`);
+            const btn = card ? card.querySelector('.seal-play-btn') : null;
+            const char = btn ? btn.querySelector('.seal-character') : null;
+
+            if (icon) icon.textContent = '▶';
+            if (char) char.textContent = '奏'; // Traditional kanji to play music
+            if (card) card.classList.remove('playing');
+        }
+
+        function handleMetadataLoaded(audio) {
+            const index = audio.getAttribute('data-index');
+            const timeDisplay = document.getElementById(`time-${index}`);
+            if (timeDisplay) {
+                timeDisplay.textContent = `00:00 / ${formatTime(audio.duration)}`;
+            }
+        }
+
+        function handleTimeUpdate(audio) {
+            const index = audio.getAttribute('data-index');
+            const fill = document.getElementById(`fill-${index}`);
+            const bead = document.getElementById(`bead-${index}`);
+            const timeDisplay = document.getElementById(`time-${index}`);
+
+            if (audio.duration) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                if (fill) fill.style.width = `${percent}%`;
+                if (bead) bead.style.left = `${percent}%`;
+                if (timeDisplay) {
+                    timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+                }
+            }
+        }
+
+        function handleSongEnded(audio) {
+            const index = audio.getAttribute('data-index');
+            const fill = document.getElementById(`fill-${index}`);
+            const bead = document.getElementById(`bead-${index}`);
+            if (fill) fill.style.width = '0%';
+            if (bead) bead.style.left = '0%';
+            handleSongPause(audio);
+        }
+
+        function seekSong(event, bar) {
+            const index = bar.getAttribute('data-index');
+            const audio = document.getElementById(`audio-${index}`);
+            if (!audio || !audio.duration) return;
+
+            const rect = bar.getBoundingClientRect();
+            const clickPosition = (event.clientX - rect.left) / rect.width;
+            audio.currentTime = Math.max(0, Math.min(1, clickPosition)) * audio.duration;
+        }
+
+        // ============================================
+        // JAPANESE CLOCK / LIVE COUNTER LOGIC
+        // ============================================
+        const startDate = new Date(2018, 4, 14, 0, 0, 0); // May 14, 2018 (month 4 = May in JS)
+
+        function updateLiveClock() {
+            const now = new Date();
+            const diffMs = now - startDate;
+            if (diffMs < 0) return;
+
+            // Total days
+            const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const liveDaysEl = document.getElementById('live-days-count');
+            if (liveDaysEl) {
+                liveDaysEl.textContent = totalDays.toLocaleString('en-US');
+            }
+
+            // Breakdown: Years, months, days
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const yEl = document.getElementById('clock-years');
+            const mEl = document.getElementById('clock-months');
+            const dEl = document.getElementById('clock-days');
+            const hEl = document.getElementById('clock-hours');
+            const minEl = document.getElementById('clock-minutes');
+            const sEl = document.getElementById('clock-seconds');
+
+            if (yEl) yEl.textContent = years;
+            if (mEl) mEl.textContent = months;
+            if (dEl) dEl.textContent = days;
+            if (hEl) hEl.textContent = hours.toString().padStart(2, '0');
+            if (minEl) minEl.textContent = minutes.toString().padStart(2, '0');
+            if (sEl) sEl.textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Start clock
+        updateLiveClock();
+        setInterval(updateLiveClock, 1000);
+
+        // ============================================
+        // FALLING LEAVES GENERATOR
+        // ============================================
+        function initFallingLeaves() {
+            const container = document.getElementById('leaves-container');
+            if (!container) return;
+
+            const leafShapes = [
+                `<svg viewBox="0 0 20 30" width="100%" height="100%"><path d="M10 0 C17 5 20 16 13 27 C11 29 10 30 10 30 C10 30 9 29 7 27 C0 16 3 5 10 0 Z" fill="currentColor"/><path d="M10 3 Q10 15 10 28" stroke="rgba(255,255,255,0.4)" stroke-width="0.75" fill="none"/></svg>`,
+                `<svg viewBox="0 0 22 26" width="100%" height="100%"><path d="M11 0 C17 3 22 10 20 18 C18 24 13 26 11 26 C9 26 4 24 2 18 C0 10 5 3 11 0 Z" fill="currentColor"/><path d="M11 3 Q11 14 11 24" stroke="rgba(255,255,255,0.35)" stroke-width="0.65" fill="none"/></svg>`,
+                `<svg viewBox="0 0 18 32" width="100%" height="100%"><path d="M9 0 C15 6 18 18 12 30 C10 32 9 32 9 32 C9 32 8 32 6 30 C0 18 3 6 9 0 Z" fill="currentColor"/><path d="M9 2 C11 12 10 22 9 30" stroke="rgba(255,255,255,0.35)" stroke-width="0.65" fill="none"/></svg>`
+            ];
+
+            const colors = [
+                '#E9AAA1', // Warm coral peach
+                '#EBAEAA', // Soft blossom peach
+                '#E6C7C1', // Delicate cream rose
+                '#F2D5CE', // Luminous pale petal
+                '#E8A99D', // Soft spring leaf
+                '#F6DDD7', // Gentle blush highlight
+                '#D8B4B1'  // Dusty rose tone
+            ];
+
+            const LEAF_COUNT = 24;
+
+            for (let i = 0; i < LEAF_COUNT; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'leaf-particle';
+
+                const inner = document.createElement('span');
+                inner.className = 'leaf-inner';
+
+                const shapeIdx = Math.floor(Math.random() * leafShapes.length);
+                inner.innerHTML = leafShapes[shapeIdx];
+
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                inner.style.color = color;
+
+                const scale = 0.75 + Math.random() * 0.55;
+                const width = Math.round(15 * scale);
+                const height = Math.round(23 * scale);
+                particle.style.width = `${width}px`;
+                particle.style.height = `${height}px`;
+
+                const leftPos = Math.random() * 100;
+                particle.style.left = `${leftPos}vw`;
+
+                const driftX = Math.round(35 + Math.random() * 85);
+                particle.style.setProperty('--drift-x', `${driftX}px`);
+
+                const fallDuration = 8 + Math.random() * 7;
+                particle.style.animationDuration = `${fallDuration.toFixed(2)}s`;
+
+                // Negative animation-delay: leaves are already in mid-fall across the screen upon arrival
+                const delay = -Math.random() * fallDuration;
+                particle.style.animationDelay = `${delay.toFixed(2)}s`;
+
+                const swayDuration = 3 + Math.random() * 2.5;
+                inner.style.animationDuration = `${swayDuration.toFixed(2)}s`;
+                inner.style.animationDelay = `${(-Math.random() * swayDuration).toFixed(2)}s`;
+
+                const maxOpacity = 0.65 + Math.random() * 0.28;
+                particle.style.setProperty('--leaf-max-opacity', maxOpacity.toFixed(2));
+
+                const initRot = Math.round(Math.random() * 360);
+                inner.style.setProperty('--init-rot', `${initRot}deg`);
+
+                particle.appendChild(inner);
+                container.appendChild(particle);
+            }
+        }
+
+        // Initialize falling leaves immediately
+        initFallingLeaves();
     </script>
 
 </body>

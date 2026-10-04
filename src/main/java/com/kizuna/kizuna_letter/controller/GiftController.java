@@ -15,21 +15,15 @@ public class GiftController {
 
     @GetMapping("/")
     public String index(Model model) {
-        // 1. Lógica del contador de días
-        LocalDate startDate = LocalDate.of(2018, 5, 14); // Puedes ajustar tu fecha especial aquí
-        LocalDate today = LocalDate.now();
-        long daysTogether = ChronoUnit.DAYS.between(startDate, today);
+        LocalDate startDate = LocalDate.of(2018, 5, 14);
+        long daysTogether = ChronoUnit.DAYS.between(startDate, LocalDate.now());
 
-        // 2. Colección de canciones para el botón "Favorite Songs"
         List<Song> songs = List.of(
-            new Song("Our Song", "Artist Name", "/audio/song1.mp3"),
-            new Song("Special Track", "Artist Name", "/audio/song2.mp3")
-        );
+                new Song("Underfell Theovania", "/audio/theovania.mp3"));
 
-        // 3. Pasar los datos a la vista de Thymeleaf
         model.addAttribute("daysTogether", daysTogether);
         model.addAttribute("songs", songs);
 
-        return "index"; // Carga index.html
+        return "index";
     }
 }

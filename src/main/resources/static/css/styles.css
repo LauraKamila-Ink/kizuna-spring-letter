@@ -9,7 +9,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    font-family: 'Georgia', serif;
+    font-family: 'Noto Serif JP', 'Georgia', serif;
     background-color: #1a0808;
 }
 
@@ -52,6 +52,81 @@ body {
     animation: gentleSwayHorizontal 6s ease-in-out infinite;
 }
 
+/* ====================================================
+   FALLING LEAVES PARTICLES ACROSS ALL SCREENS
+   ==================================================== */
+
+.leaves-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 8;
+    perspective: 600px;
+}
+
+.leaf-particle {
+    position: absolute;
+    top: -45px;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation-name: leafFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.leaf-inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform;
+    animation-name: leafTumble;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    filter: drop-shadow(0 2px 4px rgba(40, 8, 10, 0.28));
+}
+
+@keyframes leafFall {
+    0% {
+        transform: translateY(-45px) translateX(0);
+        opacity: 0;
+    }
+    8% {
+        opacity: var(--leaf-max-opacity, 0.85);
+    }
+    88% {
+        opacity: var(--leaf-max-opacity, 0.85);
+    }
+    100% {
+        transform: translateY(105vh) translateX(var(--drift-x, 80px));
+        opacity: 0;
+    }
+}
+
+@keyframes leafTumble {
+    0% {
+        transform: rotateZ(var(--init-rot, 0deg)) rotateY(0deg) rotateX(15deg);
+    }
+    50% {
+        transform: rotateZ(calc(var(--init-rot, 0deg) + 35deg)) rotateY(180deg) rotateX(45deg);
+    }
+    100% {
+        transform: rotateZ(calc(var(--init-rot, 0deg) + 70deg)) rotateY(360deg) rotateX(15deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .leaf-particle,
+    .leaf-inner {
+        animation: none !important;
+        display: none !important;
+    }
+}
 
 /* SCREEN 1: LANDING PAGE*/
 
@@ -186,6 +261,578 @@ body {
 .menu-btn:hover {
     transform: translateY(-2px) scale(1.04);
     filter: drop-shadow(0px 4px 8px rgba(255, 180, 180, 0.4));
+}
+
+/* SCREEN 3: FAVORITE SONGS - ORIENTAL SCROLL STYLE */
+#songs-screen {
+    background: url('/images/landing-bg.png') no-repeat center center;
+    background-size: cover;
+    padding: 3vh 4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2.5vw;
+}
+
+/* Songs panel aligned to the right */
+
+.songs-panel {
+    position: relative;
+    width: min(650px, 55%);
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: clamp(18px, 3.5vw, 36px);
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+    background: linear-gradient(150deg, rgba(58, 16, 20, 0.94) 0%, rgba(32, 8, 10, 0.97) 100%);
+    color: #fff2e8;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), 0 0 20px rgba(212, 175, 55, 0.25);
+}
+
+.songs-panel h1 {
+    margin: 8px 0 4px;
+    text-align: center;
+    font-family: 'Cinzel Decorative', 'Noto Serif JP', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: #ffdca8;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7), 0 0 14px rgba(212, 175, 55, 0.4);
+    letter-spacing: 1px;
+}
+
+.songs-intro {
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Noto Serif JP', 'Georgia', serif;
+    font-size: 0.95rem;
+    color: #f7d5c5;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+.back-btn {
+    padding: 7px 18px;
+    border: 1.5px solid #d4af37;
+    border-radius: 999px;
+    background: rgba(138, 26, 26, 0.4);
+    color: #ffdca8;
+    font-family: 'Cinzel Decorative', 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+    background: rgba(184, 39, 46, 0.7);
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+    transform: translateY(-1px);
+}
+
+.songs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 6px 4px 18px 4px;
+}
+
+/*SCROLL STYLE (SCROLL PLAYER)*/
+
+.scroll-card {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    position: relative;
+    min-height: 110px;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.scroll-card:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
+}
+
+.scroll-card.playing {
+    filter: drop-shadow(0 10px 24px rgba(212, 175, 55, 0.4));
+}
+
+/* Wood and bronze rods */
+.scroll-rod {
+    width: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 4;
+    flex-shrink: 0;
+}
+
+.rod-wood {
+    flex: 1;
+    width: 100%;
+    background: linear-gradient(90deg, #190906 0%, #461f16 45%, #632d20 58%, #1f0a06 100%);
+    border-radius: 2px;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.55);
+}
+
+.rod-cap {
+    width: 24px;
+    height: 13px;
+    background: linear-gradient(135deg, #ffe580 0%, #d4af37 50%, #8a6515 100%);
+    border-radius: 3px;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
+    flex-shrink: 0;
+}
+
+.rod-cap.top {
+    margin-bottom: -3px;
+}
+
+.rod-cap.bottom {
+    margin-top: -3px;
+}
+
+/* Traditional hanging tassel */
+.chinese-tassel {
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+    animation: tasselSway 4s ease-in-out infinite alternate;
+    transform-origin: top center;
+}
+
+.tassel-string {
+    width: 2px;
+    height: 12px;
+    background: #d4af37;
+}
+
+.tassel-knot {
+    width: 10px;
+    height: 10px;
+    background: #9e1a1a;
+    border: 1.5px solid #d4af37;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.tassel-fringe {
+    width: 8px;
+    height: 28px;
+    background: linear-gradient(180deg, #b81d1d 0%, #6e0c0c 100%);
+    border-radius: 0 0 4px 4px;
+    margin-top: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Rice paper / silk scroll body */
+.scroll-body {
+    flex: 1;
+    min-width: 0;
+    background-color: #f7edd8;
+    background-image: 
+        radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.75) 0%, rgba(228, 208, 178, 0.6) 100%),
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(160, 110, 60, 0.035) 3px, rgba(160, 110, 60, 0.035) 6px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: inset 18px 0 16px -12px rgba(60, 24, 12, 0.45), inset -18px 0 16px -12px rgba(60, 24, 12, 0.45);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* Top and bottom silk brocade border */
+.scroll-border-top,
+.scroll-border-bottom {
+    height: 8px;
+    background: linear-gradient(90deg, #701115 0%, #9e1c22 30%, #b8272e 50%, #9e1c22 70%, #701115 100%);
+    border-top: 1px solid #d4af37;
+    border-bottom: 1px solid #d4af37;
+    flex-shrink: 0;
+}
+
+.scroll-inner {
+    padding: 16px 26px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex: 1;
+}
+
+/* Imperial Red Seal Button (Play / Pause) */
+.seal-play-btn {
+    background: radial-gradient(circle at 35% 35%, #bf2222 0%, #7d1010 100%);
+    border: 2px solid #e0ad38;
+    border-radius: 8px;
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff8eb;
+    box-shadow: 0 4px 10px rgba(110, 15, 15, 0.5), inset 0 0 6px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s, box-shadow 0.2s;
+    user-select: none;
+}
+
+.seal-play-btn:hover {
+    transform: scale(1.08);
+    filter: brightness(1.12);
+    box-shadow: 0 6px 14px rgba(140, 20, 20, 0.6), 0 0 12px rgba(224, 173, 56, 0.7);
+}
+
+.seal-play-btn:active {
+    transform: scale(0.95);
+}
+
+.seal-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #ffd700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.seal-character {
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: 'Ma Shan Zheng', 'Yuji Boku', serif;
+    line-height: 1;
+    margin-top: 3px;
+    color: #ffe8b3;
+    opacity: 0.95;
+    letter-spacing: 1px;
+}
+
+/* Song details */
+.scroll-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.song-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+}
+
+.song-title {
+    font-family: 'Cinzel Decorative', 'Noto Serif JP', 'Georgia', serif;
+    color: #2b1209;
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #7a351e;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+/* Custom silk progress bar */
+.silk-progress-bar {
+    width: 100%;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.silk-track {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: #e3cfb0;
+    border: 1px solid #b88f55;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.silk-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #94171d 0%, #c92828 70%, #d4af37 100%);
+    border-radius: 5px;
+    transition: width 0.08s linear;
+}
+
+.silk-bead {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle at 35% 35%, #ffe685 0%, #d4af37 60%, #876214 100%);
+    border: 1.5px solid #5a190b;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    transition: left 0.08s linear;
+}
+
+.empty-songs {
+    text-align: center;
+    color: #ffdca8;
+    font-style: italic;
+    font-size: 1.1rem;
+    padding: 20px 0;
+}
+
+@keyframes tasselSway {
+    0% {
+        transform: translateX(-50%) rotate(-4deg);
+    }
+    100% {
+        transform: translateX(-50%) rotate(4deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .scroll-inner {
+        padding: 12px 14px;
+        gap: 14px;
+    }
+
+    .seal-play-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .seal-icon {
+        font-size: 1rem;
+    }
+
+    .seal-character {
+        font-size: 0.72rem;
+    }
+
+    .song-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+}
+
+@media (max-width: 900px) {
+    #songs-screen {
+        flex-direction: column-reverse;
+        justify-content: center;
+        gap: 20px;
+        overflow-y: auto;
+    }
+
+    .songs-art-zone {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+    }
+
+    .art-placeholder {
+        height: 220px;
+    }
+
+    .songs-panel {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .clock-units-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+}
+
+/* SCREEN 4: TIME TOGETHER COUNTER (JAPANESE CLOCK) */
+
+#counter-screen {
+    background: url('/images/landing-bg.png') no-repeat center center;
+    background-size: cover;
+    padding: 3vh 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.counter-container {
+    width: 100%;
+    max-width: 820px;
+    height: 94vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Upper Japanese Clock */
+.japanese-clock-box {
+    width: 100%;
+    background: linear-gradient(145deg, rgba(52, 14, 18, 0.95) 0%, rgba(22, 6, 8, 0.97) 100%);
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+    padding: 16px 24px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(212, 175, 55, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.clock-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.clock-torii-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.torii-accent {
+    font-size: 1.4rem;
+}
+
+.clock-title-kanji {
+    font-family: 'Ma Shan Zheng', 'Yuji Boku', serif;
+    font-size: 1.8rem;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.clock-title-roman {
+    font-family: 'Cinzel Decorative', 'Noto Serif JP', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffdca8;
+    letter-spacing: 2px;
+}
+
+.clock-face {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 4px 0;
+}
+
+.clock-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.clock-days-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.days-number {
+    font-family: 'Cinzel Decorative', 'Georgia', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8), 0 0 16px rgba(212, 175, 55, 0.5);
+    line-height: 1.1;
+    letter-spacing: 2px;
+}
+
+.days-label {
+    font-family: 'Noto Serif JP', 'Georgia', serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f7d5c5;
+    letter-spacing: 3px;
+    opacity: 0.9;
+}
+
+/* Live Time Units Grid */
+.clock-units-wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 580px;
+}
+
+.clock-unit-item {
+    background: rgba(30, 8, 10, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 10px;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.clock-unit-item:hover {
+    transform: translateY(-2px);
+    border-color: #ffd700;
+}
+
+.unit-val {
+    font-family: 'Cinzel Decorative', monospace;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff8eb;
+    line-height: 1.2;
+}
+
+.unit-tag {
+    font-family: 'Noto Serif JP', 'Georgia', serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #e5bc72;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+.clock-unit-item.unit-seconds {
+    border-color: rgba(212, 175, 55, 0.75);
+    background: rgba(75, 18, 22, 0.6);
+}
+
+.clock-footer-text {
+    text-align: center;
+    font-family: 'Noto Serif JP', 'Georgia', serif;
+    font-size: 0.8rem;
+    color: #ffdca8;
+    opacity: 0.92;
+    font-style: italic;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding-top: 6px;
 }
 
 /* ANIMATIONS*/
