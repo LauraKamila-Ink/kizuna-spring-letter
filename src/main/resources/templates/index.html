@@ -51,7 +51,7 @@
             <button class="menu-btn" onclick="openSection('songs')">
                 <img th:src="@{/images/btn-songs.png}" alt="Favorite Songs">
             </button>
-            <button class="menu-btn" onclick="openSection('reasons')">
+            <button class="menu-btn" type="button" onclick="showScreen('reasons-screen')">
                 <img th:src="@{/images/btn-reasons.png}" alt="Reasons to Love">
             </button>
             <button class="menu-btn" onclick="openSection('counter')">
@@ -152,6 +152,21 @@
         <div class="counter-container">
             <!-- UPPER PART: Traditional Japanese Clock / Kizuna Clock -->
             <div class="japanese-clock-box">
+                <div class="scroll-rod rod-left clock-scroll-rod" aria-hidden="true">
+                    <span class="rod-cap top"></span>
+                    <div class="rod-wood"></div>
+                    <span class="rod-cap bottom"></span>
+                    <div class="chinese-tassel">
+                        <span class="tassel-string"></span>
+                        <span class="tassel-knot"></span>
+                        <span class="tassel-fringe"></span>
+                    </div>
+                </div>
+                <div class="scroll-rod rod-right clock-scroll-rod" aria-hidden="true">
+                    <span class="rod-cap top"></span>
+                    <div class="rod-wood"></div>
+                    <span class="rod-cap bottom"></span>
+                </div>
                 <div class="clock-nav">
                     <button class="back-btn" type="button" onclick="showScreen('menu-screen')">← Menu</button>
                     <div class="clock-torii-header">
@@ -215,6 +230,154 @@
         </div>
     </section>
 
+    <!-- SCREEN 5: REASONS TO LOVE YOU -->
+    <section id="reasons-screen" class="screen hidden">
+        <div class="reasons-layout">
+            <header class="reasons-header">
+                <button class="back-btn" type="button" onclick="showScreen('menu-screen')">← Menu</button>
+                <h1>Reasons I Love You</h1>
+                <span class="reasons-header-spacer" aria-hidden="true"></span>
+            </header>
+
+            <div class="reasons-scrolls">
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>You make ordinary days feel special.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>Your laughter makes everything feel warmer.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>You inspire me to keep dreaming.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>I love the way you see the world.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>You believe in the person I am becoming.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>You make tomorrow feel full of possibility.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>Your heart is one of my favorite places.</p></article>
+                <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>Of all the lives I could have lived, I would still choose you.</p></article>
+            </div>
+
+            <div class="reasons-art-space" aria-label="Espacio reservado para la ilustración"></div>
+        </div>
+    </section>
+
+    <!-- SCREEN: LETTER -->
+    <section id="letter-screen" class="screen hidden">
+        <div class="letter-container">
+            <main class="letter-left-panel">
+                <button class="back-btn" type="button" onclick="showScreen('menu-screen')">← Menu</button>
+
+                <article class="letter-content">
+                    <header class="letter-heading">
+                        <span class="letter-kicker">A letter for you</span>
+                        <h1>The One Who Taught Me to Look Toward Tomorrow</h1>
+                    </header>
+
+                    <p>There is one thing I have never thanked you for enough.</p>
+                    <p>You did not simply make my life happier.</p>
+                    <p>You changed the way I looked at it.</p>
+                    <p>There were moments when the world felt terribly heavy, when tomorrow seemed like nothing more than another distant day waiting to arrive.</p>
+                    <p>And then there was you.</p>
+                    <p>Your voice.<br>Your presence.<br>Your laughter.</p>
+                    <p>The simple knowledge that somewhere in this enormous world, there was someone I loved and who loved me in return.</p>
+                    <p>You reminded me that tomorrow could hold something beautiful.</p>
+                    <p>That there could still be things I had not seen.<br>Places I had not visited.<br>Dreams I had not dreamed yet.<br>Little moments that had not happened.</p>
+                    <p>You gave me another reason to look forward.</p>
+                    <p>Not because you were meant to carry the weight of my life upon your shoulders.</p>
+                    <p>You never had to save me by becoming my entire world.</p>
+                    <p>You simply became one of the brightest reasons I wanted to keep discovering what the world could still become.</p>
+                    <p>And I will always be grateful for that.</p>
+                    <p>Perhaps that is why I think of you whenever I imagine the Japanese idea of <em>musubi</em>—the invisible thread that brings people, moments, and destinies together.</p>
+                    <p>I do not know whether some invisible thread truly led me to you.<br>But sometimes I look at our story and wonder how else I could explain it.</p>
+                    <p>Out of all the lives being lived at the same time as ours,<br>out of all the places we could have been,<br>out of all the people we could have passed without ever knowing,<br>somehow our paths met.</p>
+                    <p>And somehow, they kept meeting.</p>
+                    <p class="letter-refrain">Again.<br>And again.</p>
+                    <p>Until you became part of my life so deeply that imagining it without you feels like trying to imagine the sky without the moon.</p>
+                    <p>Perhaps that is what our thread is.</p>
+                    <p>Not a chain.<br>Not a promise that nothing will ever change.</p>
+                    <p>But a quiet connection that says:</p>
+                    <blockquote>“No matter how much we grow, I will remember where I found you.”</blockquote>
+
+                    <hr>
+                    <h2>You became a light I could recognize.</h2>
+                    <p>I think there is something beautiful about <em>tsukimi</em>, the simple act of looking at the moon.</p>
+                    <p>The moon does not ask anything of us.<br>It does not need to be touched to be beautiful.<br>We simply look at it, and somehow the night feels less empty.</p>
+                    <p>Sometimes I think you have been like that for me.</p>
+                    <p>Not because you erased every difficult thing.<br>Not because you made the darkness disappear.</p>
+                    <p>But because your presence gave me something beautiful to look toward.</p>
+                    <p>And sometimes, that is enough to make a night feel different.</p>
+                    <p>You have reminded me that life is not made only of its hardest moments.</p>
+                    <p>It is also made of laughter in the middle of an ordinary day.<br>Of conversations that last far longer than they were supposed to.<br>Of dreams whispered between two people.<br>Of silly jokes.<br>Of plans for the future.<br>Of discovering something new and immediately wanting to tell the other person.<br>Of sitting beside someone you love and realizing that, for that moment, you are exactly where you want to be.</p>
+                    <p>You taught me to notice those things.<br>To treasure them.<br>To want more of them.</p>
+                    <p>And perhaps that is one of the greatest gifts you have ever given me.</p>
+                    <p>You helped me remember that there is beauty in simply being here to witness it.</p>
+
+                    <hr>
+                    <h2>If our hearts have scars...</h2>
+                    <p>Then perhaps I understand <em>kintsugi</em> a little differently now.</p>
+                    <p>There is something beautiful in the idea that what has been broken does not have to be hidden.</p>
+                    <p>The cracks become part of the story.<br>They become part of what makes the object itself.</p>
+                    <p>I think people are like that too.</p>
+                    <p>We grow.<br>We change.<br>We carry memories.<br>We make mistakes.<br>We sometimes become tired.</p>
+                    <p>And none of that makes us less worthy of love.</p>
+                    <p>You do not have to be untouched by life for me to admire you.<br>I do not want some flawless version of you.<br>I want the real you.</p>
+                    <p>The one who has lived.<br>The one who is still learning.<br>The one who sometimes doubts himself and still keeps moving.<br>The one who has dreams that are still waiting to become reality.<br>The one whose soul I have had the privilege of knowing little by little, year after year.</p>
+                    <p>Every part of you belongs to the person I love.</p>
+                    <p>The polished parts.<br>The uncertain parts.<br>The beautiful parts.<br>The unfinished parts.</p>
+                    <p>All of them.</p>
+
+                    <hr>
+                    <h2>And perhaps that is why I love you so deeply.</h2>
+                    <p>There is a Japanese expression, <em>mono no aware</em>, that carries the feeling of being moved by the beauty of things precisely because they are temporary.</p>
+                    <p>Perhaps love feels a little like that.</p>
+                    <p>We know that moments pass.<br>Childhood passes.<br>Years pass.<br>People change.<br>Even the happiest days eventually become memories.</p>
+                    <p>And yet, knowing that does not make them less precious.<br>It makes me want to hold them more carefully.</p>
+                    <p>So I want to remember you.<br>Not only as you are now.<br>But in every version of you I have been lucky enough to know.</p>
+                    <p>The boy you once were.<br>The person you are today.<br>The man you are still becoming.</p>
+                    <p>I want to remember your laughter.<br>Your dreams.<br>The things that make your eyes light up.<br>The moments when you are proud of yourself.<br>The moments when you need someone to remind you that you are capable of more than you think.</p>
+                    <p>I want to remember all of it.</p>
+                    <p>Because one day, years from now, I want to look back and think:</p>
+                    <blockquote>“I was there.”</blockquote>
+                    <p>I was there when you were still becoming yourself.<br>I was there when you were learning.<br>I was there when you succeeded.<br>I was there when things were difficult.<br>I was there when we were young and still had so much of life ahead of us.</p>
+                    <p>And most importantly—</p>
+                    <blockquote><strong>I was there to love you.</strong></blockquote>
+
+                    <hr>
+                    <h2>If I were given another lifetime...</h2>
+                    <p>I do not know whether souls truly find one another again.</p>
+                    <p>But if they do,<br>I hope mine remembers yours.</p>
+                    <p>I hope that somewhere, in some distant place, beneath some unfamiliar sky, I would hear your voice and feel that strange certainty again.</p>
+                    <p>That quiet feeling of:</p>
+                    <blockquote>There you are.</blockquote>
+                    <p>And if I had to cross another thousand roads to find you,<br>I think I would.</p>
+                    <p>Not because I believe there is only one person in the entire universe capable of making me happy.<br>But because, after knowing you, I know what it feels like to find someone whose soul feels familiar.</p>
+                    <p>Someone whose existence makes the world feel a little warmer.<br>Someone who inspires me to become more.<br>Someone I can admire without putting on a pedestal.<br>Someone I can love without needing perfection.<br>Someone I can choose freely.</p>
+                    <p>And I would choose you freely.</p>
+                    <p class="letter-refrain">Every time.</p>
+
+                    <hr>
+                    <h2>So thank you.</h2>
+                    <p>Thank you for every ordinary day you made feel special.<br>Thank you for every laugh.<br>Every conversation.<br>Every dream.<br>Every little moment that reminded me there was still so much life waiting ahead.</p>
+                    <p>Thank you for being a place where my heart could rest.<br>Thank you for inspiring me.<br>For believing in me.<br>For making me want to keep learning, creating, dreaming, and becoming.</p>
+                    <p>Thank you for letting me know your soul.</p>
+                    <p>Because of all the things I could have found in this enormous world,<br>somehow,<br>I found you.</p>
+                    <p>And the world was kind enough to let me keep you beside me.</p>
+                    <p>I will never consider that an ordinary thing.<br>I will treasure it.</p>
+                    <p>Like moonlight on a quiet night.<br>Like a repaired piece of porcelain with gold running through its cracks.<br>Like a thread connecting two lives that somehow found one another.</p>
+                    <p>And if life gives us many more years,<br>I want to fill them with memories.</p>
+                    <p>Not perfect ones.<br>Real ones.<br>The kind that become precious precisely because they belonged to us.</p>
+                    <p>So when you look toward the future, remember this:</p>
+                    <p>There is someone who believes in the person you are becoming.<br>Someone who admires the soul behind your eyes.<br>Someone who is endlessly grateful that your path crossed hers.<br>Someone who has found, beside you, even more reasons to look toward tomorrow.</p>
+                    <p>And when the years have passed,<br>when we have changed in ways we cannot yet imagine,<br>I hope I can still look at you beneath some quiet moon and recognize the same soul.</p>
+                    <p>The same feeling.<br>The same <em>you</em>.</p>
+                    <p>And I hope I can smile and say:</p>
+                    <blockquote>“Of all the lives I could have lived,<br>I am grateful that mine led me to you.”</blockquote>
+                    <p class="letter-signoff">Still you.<br>Always you.<br><br>And, if I am allowed to choose,<br><strong>you again.</strong></p>
+                </article>
+            </main>
+
+            <aside class="letter-right-zone">
+                <div class="letter-art-stack" aria-label="Ilustración de la carta">
+                    <img th:src="@{/images/body-letter.png}" alt="Cuerpo de la ilustración" class="letter-art-img letter-body-img">
+                    <img th:src="@{/images/hand-letter.png}" alt="Mano escribiendo" class="letter-art-img letter-hand-img">
+                </div>
+            </aside>
+        </div>
+    </section>
+
     <!-- JavaScript Navigation -->
     <script>
         function enterApp() {
@@ -235,8 +398,12 @@
         function openSection(sectionName) {
             if (sectionName === 'songs') {
                 showScreen('songs-screen');
+            } else if (sectionName === 'letter') {
+                showScreen('letter-screen');
             } else if (sectionName === 'counter') {
                 showScreen('counter-screen');
+            } else if (sectionName === 'reasons') {
+                showScreen('reasons-screen');
             } else {
                 console.log("Opening section:", sectionName);
             }
