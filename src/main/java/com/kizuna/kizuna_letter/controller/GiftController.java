@@ -19,7 +19,10 @@ public class GiftController {
         long daysTogether = ChronoUnit.DAYS.between(startDate, LocalDate.now());
 
         List<Song> songs = List.of(
-                new Song("Underfell Theovania", "/audio/theovania.mp3"));
+                new Song("Underfell Theovania", "/audio/theovania.mp3"),
+                new Song("Bad Time Trio", "/audio/bad-time-trio.mp3"),
+                new Song("Throw Away Your Mask", "/audio/throw-away-your-mask.mp3")
+        );
 
         model.addAttribute("daysTogether", daysTogether);
         model.addAttribute("songs", songs);
