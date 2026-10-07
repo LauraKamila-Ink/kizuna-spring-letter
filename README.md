@@ -1,4 +1,4 @@
-# KIZUNA LETTER
+# ❣️KIZUNA LETTER❣️
 
 <p align="center">
   <img src="./src/main/resources/static/images/dancing-couple.png">
@@ -7,8 +7,6 @@
 <p align="center">
   <i>A little world made for someone very special.</i>
 </p>
-
-
 ---
 
 ## To the person this was made for
