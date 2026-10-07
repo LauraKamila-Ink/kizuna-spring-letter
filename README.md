@@ -7,7 +7,6 @@
 <p align="center">
   <i>A little world made for someone very special.</i>
 </p>
----
 
 ## To the person this was made for
 
