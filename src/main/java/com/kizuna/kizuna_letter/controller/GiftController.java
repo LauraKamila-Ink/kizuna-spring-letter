@@ -21,7 +21,13 @@ public class GiftController {
         List<Song> songs = List.of(
                 new Song("Underfell Theovania", "/audio/theovania.mp3"),
                 new Song("Bad Time Trio", "/audio/bad-time-trio.mp3"),
-                new Song("Throw Away Your Mask", "/audio/throw-away-your-mask.mp3")
+                new Song("Throw Away Your Mask", "/audio/throw-away-your-mask.mp3"),
+                new Song("Five Nights at Freddy's 3", "/audio/fnaf3.mp3"),
+                new Song("Coded To Reality", "/audio/codedtoreality.mp3"),
+                new Song("Life Will Change", "/audio/lifewillchange.mp3"),
+                new Song("Reach Out To The Truth", "/audio/persona3.mp3"),
+                new Song("Rivers In The Desert", "/audio/riversinthedesert.mp3"),
+                new Song("Stuck Inside", "/audio/stuckinside.mp3")
         );
 
         model.addAttribute("daysTogether", daysTogether);

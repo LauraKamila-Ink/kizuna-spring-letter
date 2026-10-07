@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kizuna Letter ✨</title>
-    <!-- Google Fonts: Oriental Calligraphy & Japanese Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Ma+Shan+Zheng&family=Noto+Serif+JP:wght@400;600;700&family=Yuji+Boku&display=swap" rel="stylesheet">
@@ -12,15 +11,12 @@
 </head>
 <body>
 
-    <!-- Front Leafs -->
     <div class="foliage-overlay">
         <img th:src="@{/images/falling-leaf.png}" alt="Leaves">
     </div>
 
-    <!-- Falling Leaves Across All Screens -->
     <div id="leaves-container" class="leaves-container" aria-hidden="true"></div>
 
-    <!-- Background Audio -->
     <audio id="bg-music" loop>
         <source th:src="@{/audio/background-music.mp3}" type="audio/mpeg">
     </audio>
@@ -62,10 +58,9 @@
 
     <!-- SCREEN 3: FAVORITE SONGS -->
     <section id="songs-screen" class="screen hidden">
-        <!-- Left space for user illustration / artwork -->
         <div class="songs-art-zone">
-            <img th:src="@{/images/linterns-songs.png}" alt="Japanese floating lanterns" class="songs-art-img songs-lanterns-img">
-            <img th:src="@{/images/couple-songs.png}" alt="A couple together in a Japanese boat" class="songs-art-img songs-couple-img">
+            <img th:src="@{/images/body-song.png}" alt="Character enjoying the music" class="songs-art-img songs-body-img">
+            <img th:src="@{/images/hand-song.png}" alt="Character's hand moving gently with the music" class="songs-art-img songs-hand-img">
         </div>
 
         <main class="songs-panel">
@@ -75,7 +70,6 @@
 
             <div class="songs-list">
                 <article class="scroll-card" th:each="song, iter : ${songs}" th:id="'song-card-' + ${iter.index}">
-                    <!-- Left wood and bronze rod with tassel -->
                     <div class="scroll-rod rod-left">
                         <span class="rod-cap top"></span>
                         <div class="rod-wood"></div>
@@ -87,25 +81,21 @@
                         </div>
                     </div>
 
-                    <!-- Center scroll body of silk / rice paper -->
                     <div class="scroll-body">
                         <div class="scroll-border-top"></div>
                         
                         <div class="scroll-inner">
-                            <!-- Imperial red seal (Play / Pause button) -->
                             <button class="seal-play-btn" type="button" th:data-index="${iter.index}" onclick="toggleSongPlay(this)" title="Play">
                                 <span class="seal-icon" th:id="'icon-' + ${iter.index}">▶</span>
                                 <span class="seal-character">奏</span>
                             </button>
 
-                            <!-- Song details and silk progress bar -->
                             <div class="scroll-details">
                                 <div class="song-header">
                                     <h2 class="song-title" th:text="${song.title}">Song Title</h2>
                                     <span class="time-display" th:id="'time-' + ${iter.index}">00:00 / 00:00</span>
                                 </div>
 
-                                <!-- Custom silk thread style progress bar -->
                                 <div class="silk-progress-bar" th:data-index="${iter.index}" onclick="seekSong(event, this)">
                                     <div class="silk-track">
                                         <div class="silk-fill" th:id="'fill-' + ${iter.index}"></div>
@@ -114,7 +104,6 @@
                                 </div>
                             </div>
 
-                            <!-- Hidden native audio element -->
                             <audio th:id="'audio-' + ${iter.index}" preload="metadata"
                                    th:data-index="${iter.index}"
                                    onplay="handleSongPlay(this)"
@@ -130,7 +119,6 @@
                         <div class="scroll-border-bottom"></div>
                     </div>
 
-                    <!-- Right wood and bronze rod -->
                     <div class="scroll-rod rod-right">
                         <span class="rod-cap top"></span>
                         <div class="rod-wood"></div>
@@ -145,7 +133,6 @@
     <!-- SCREEN 4: TIME TOGETHER COUNTER (JAPANESE CLOCK / ORIENTAL COUNTER) -->
     <section id="counter-screen" class="screen hidden">
         <div class="counter-container">
-            <!-- UPPER PART: Traditional Japanese Clock / Kizuna Clock -->
             <div class="japanese-clock-box">
                 <div class="scroll-rod rod-left clock-scroll-rod" aria-hidden="true">
                     <span class="rod-cap top"></span>
@@ -170,7 +157,6 @@
                     </div>
                 </div>
 
-                <!-- Clock Face / Total Days Counter -->
                 <div class="clock-face">
                     <div class="clock-center">
                         <div class="clock-days-total">
@@ -178,7 +164,6 @@
                             <span class="days-label">DAYS TOGETHER · 日々</span>
                         </div>
                         
-                        <!-- Detailed Live Counter: Years, Months, Days, Hours, Minutes, Seconds -->
                         <div class="clock-units-wrapper">
                             <div class="clock-unit-item">
                                 <span class="unit-val" id="clock-years">0</span>
@@ -213,14 +198,10 @@
                 </div>
             </div>
 
-            <!-- BOTTOM PART: Reserved space for user artwork / illustration -->
             <div class="counter-art-zone">
-                <!-- When you have your illustration, place it here:
-                     <img th:src="@{/images/your-illustration.png}" alt="Illustration" class="counter-art-img">
-                -->
-                <div class="art-placeholder-bottom">
-                    <span class="art-placeholder-text">Reserved space for your illustration</span>
-                </div>
+                <img th:src="@{/images/linterns-songs.png}" alt="Floating lanterns to the left of the couple" class="counter-side-lantern counter-side-lantern-left reasons-lantern">
+                <img th:src="@{/images/lovers.png}" alt="A couple celebrating their time together" class="counter-art-img counter-lovers-img">
+                <img th:src="@{/images/linterns-songs.png}" alt="Floating lanterns to the right of the couple" class="counter-side-lantern counter-side-lantern-right reasons-lantern reasons-lantern-right">
             </div>
         </div>
     </section>
@@ -245,11 +226,15 @@
                 <article class="reason-scroll"><span class="chinese-tassel reason-tassel" aria-hidden="true"><span class="tassel-string"></span><span class="tassel-knot"></span><span class="tassel-fringe"></span></span><p>Simply you, because after all these years, I would still choose you.</p></article>
             </div>
 
-            <div class="reasons-art-space" aria-label="Espacio reservado para la ilustración"></div>
+            <div class="reasons-art-space" aria-label="Lanterns and a couple in a boat">
+                <img th:src="@{/images/linterns-songs.png}" alt="Floating lanterns on the left" class="reasons-art-img reasons-lantern reasons-lantern-left">
+                <img th:src="@{/images/couple-songs.png}" alt="A couple together in a Japanese boat" class="reasons-art-img reasons-couple">
+                <img th:src="@{/images/linterns-songs.png}" alt="Floating lanterns on the right" class="reasons-art-img reasons-lantern reasons-lantern-right">
+            </div>
         </div>
     </section>
 
-    <!-- SCREEN: LETTER -->
+    <!-- SCREEN 6: LETTER -->
     <section id="letter-screen" class="screen hidden">
         <div class="letter-container">
             <main class="letter-left-panel">
@@ -405,12 +390,10 @@
         }
 
         function showScreen(screenId) {
-            // Pause any scroll song currently playing
             if (screenId !== 'songs-screen') {
                 pauseAllSongs();
             }
 
-            // Resume ambient background music when returning to the main menu
             if (screenId === 'menu-screen') {
                 const bgMusic = document.getElementById('bg-music');
                 if (bgMusic && bgMusic.paused) {
@@ -425,7 +408,6 @@
         // ============================================
         // SCROLL PLAYER LOGIC
         // ============================================
-
         function formatTime(seconds) {
             if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
             const mins = Math.floor(seconds / 60);
@@ -439,10 +421,8 @@
             if (!audio) return;
 
             if (audio.paused) {
-                // Pause any other active song
                 pauseAllSongs(audio);
 
-                // Pause ambient background music to listen to the song
                 const bgMusic = document.getElementById('bg-music');
                 if (bgMusic && !bgMusic.paused) {
                     bgMusic.pause();
@@ -470,7 +450,7 @@
             const char = btn ? btn.querySelector('.seal-character') : null;
 
             if (icon) icon.textContent = '❚❚';
-            if (char) char.textContent = '止'; // Traditional kanji for pause / stop
+            if (char) char.textContent = '止';
             if (card) card.classList.add('playing');
         }
 
@@ -482,7 +462,7 @@
             const char = btn ? btn.querySelector('.seal-character') : null;
 
             if (icon) icon.textContent = '▶';
-            if (char) char.textContent = '奏'; // Traditional kanji to play music
+            if (char) char.textContent = '奏';
             if (card) card.classList.remove('playing');
         }
 
@@ -532,21 +512,19 @@
         // ============================================
         // JAPANESE CLOCK / LIVE COUNTER LOGIC
         // ============================================
-        const startDate = new Date(2018, 4, 14, 0, 0, 0); // May 14, 2018 (month 4 = May in JS)
+        const startDate = new Date(2018, 4, 14, 0, 0, 0);
 
         function updateLiveClock() {
             const now = new Date();
             const diffMs = now - startDate;
             if (diffMs < 0) return;
 
-            // Total days
             const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
             const liveDaysEl = document.getElementById('live-days-count');
             if (liveDaysEl) {
                 liveDaysEl.textContent = totalDays.toLocaleString('en-US');
             }
 
-            // Breakdown: Years, months, days
             let years = now.getFullYear() - startDate.getFullYear();
             let months = now.getMonth() - startDate.getMonth();
             let days = now.getDate() - startDate.getDate();
@@ -580,7 +558,6 @@
             if (sEl) sEl.textContent = seconds.toString().padStart(2, '0');
         }
 
-        // Start clock
         updateLiveClock();
         setInterval(updateLiveClock, 1000);
 
@@ -598,13 +575,13 @@
             ];
 
             const colors = [
-                '#E9AAA1', // Warm coral peach
-                '#EBAEAA', // Soft blossom peach
-                '#E6C7C1', // Delicate cream rose
-                '#F2D5CE', // Luminous pale petal
-                '#E8A99D', // Soft spring leaf
-                '#F6DDD7', // Gentle blush highlight
-                '#D8B4B1'  // Dusty rose tone
+                '#E9AAA1',
+                '#EBAEAA',
+                '#E6C7C1',
+                '#F2D5CE',
+                '#E8A99D',
+                '#F6DDD7',
+                '#D8B4B1'
             ];
 
             const LEAF_COUNT = 24;
@@ -637,7 +614,6 @@
                 const fallDuration = 8 + Math.random() * 7;
                 particle.style.animationDuration = `${fallDuration.toFixed(2)}s`;
 
-                // Negative animation-delay: leaves are already in mid-fall across the screen upon arrival
                 const delay = -Math.random() * fallDuration;
                 particle.style.animationDelay = `${delay.toFixed(2)}s`;
 
@@ -656,7 +632,6 @@
             }
         }
 
-        // Initialize falling leaves immediately
         initFallingLeaves();
     </script>
 

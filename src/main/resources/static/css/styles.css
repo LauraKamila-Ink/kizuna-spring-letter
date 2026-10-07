@@ -1,4 +1,3 @@
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +12,6 @@ body {
     background-color: #1a0808;
 }
 
-/* Base screen structure */
 .screen {
     position: absolute;
     top: 0;
@@ -32,8 +30,6 @@ body {
     pointer-events: none;
 }
 
-/* OVERLAY: leafs */
-
 .foliage-overlay {
     position: absolute;
     top: 0;
@@ -51,8 +47,6 @@ body {
     display: block;
     animation: gentleSwayHorizontal 6s ease-in-out infinite;
 }
-
-/*FALLING LEAVES PARTICLES ACROSS ALL SCREENS*/
 
 .leaves-container {
     position: fixed;
@@ -142,8 +136,6 @@ body {
     height: 100vh;
 }
 
-/* Principal ilustration */
-
 .character-body,
 .character-legs {
     position: absolute;
@@ -165,7 +157,6 @@ body {
     animation: balanceoPiernaSentada 2s ease-in-out infinite;
 }
 
-/* Principal button */
 .interactive-button {
     position: absolute;
     background: none;
@@ -212,8 +203,6 @@ body {
     align-items: center;
 }
 
-/* Dancing couple */
-
 .dancing-couple {
     width: min(76vw, calc(118vh * 0.9724));
     max-height: none;
@@ -225,8 +214,6 @@ body {
     object-fit: contain;
     animation: gentleDance 6s ease-in-out infinite;
 }
-
-/* Right menu*/
 
 .menu-navigation {
     width: 30%;
@@ -292,22 +279,31 @@ body {
     pointer-events: none;
 }
 
-.songs-lanterns-img {
-    top: 0;
-    left: 3%;
-    width: min(72%, 62vh);
-    max-height: 66%;
+.songs-body-img {
+    left: 13.5%;
+    bottom: 0;
+    height: 105%;
     z-index: 1;
-    animation: lanternsFloat 5.8s ease-in-out infinite;
+    animation: songBodyBreath 5.6s ease-in-out infinite;
 }
 
-.songs-couple-img {
-    left: 1%;
-    bottom: 0;
-    width: min(98%, 85vh);
-    max-height: 78%;
+.songs-hand-img {
+    left: 36.9%;
+    bottom: 15%;
+    height: 80%;
     z-index: 2;
-    animation: coupleBoatSway 6.4s ease-in-out infinite;
+    transform-origin: 20% 80%;
+    animation: songHandSway 4.2s ease-in-out infinite;
+}
+
+@keyframes songBodyBreath {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes songHandSway {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
 }
 
 @keyframes lanternsFloat {
@@ -321,12 +317,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .songs-art-img {
+    .songs-art-img,
+    .reasons-art-img,
+    .counter-art-img,
+    .counter-side-lantern {
         animation: none !important;
     }
 }
-
-/* Songs panel aligned to the right */
 
 .songs-panel {
     position: relative;
@@ -395,8 +392,6 @@ body {
     padding: 6px 4px 18px 4px;
 }
 
-/* Song scroll bar*/
-
 .songs-panel {
     scrollbar-width: thin;
     scrollbar-color: #9b6941 rgba(125, 82, 48, 0.12);
@@ -421,8 +416,6 @@ body {
     background: linear-gradient(180deg, #a47349, #d0a873);
 }
 
-/*SCROLL STYLE (SCROLL PLAYER)*/
-
 .scroll-card {
     display: flex;
     align-items: stretch;
@@ -442,7 +435,6 @@ body {
     filter: drop-shadow(0 10px 24px rgba(212, 175, 55, 0.4));
 }
 
-/* Wood and bronze rods */
 .scroll-rod {
     width: 15px;
     position: relative;
@@ -478,7 +470,6 @@ body {
     margin-top: -3px;
 }
 
-/* Traditional hanging tassel */
 .chinese-tassel {
     position: absolute;
     top: calc(100% - 2px);
@@ -517,7 +508,6 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Rice paper / silk scroll body */
 .scroll-body {
     flex: 1;
     min-width: 0;
@@ -533,7 +523,6 @@ body {
     overflow: hidden;
 }
 
-/* Top and bottom silk brocade border */
 .scroll-border-top,
 .scroll-border-bottom {
     height: 8px;
@@ -551,7 +540,6 @@ body {
     flex: 1;
 }
 
-/* Imperial Red Seal Button (Play / Pause) */
 .seal-play-btn {
     background: radial-gradient(circle at 35% 35%, #bf2222 0%, #7d1010 100%);
     border: 2px solid #e0ad38;
@@ -598,7 +586,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Song details */
 .scroll-details {
     flex: 1;
     min-width: 0;
@@ -637,7 +624,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Custom silk progress bar */
 .silk-progress-bar {
     width: 100%;
     padding: 8px 0;
@@ -738,19 +724,8 @@ body {
         flex: 0 0 auto;
     }
 
-    .songs-lanterns-img {
-        top: 0;
-        left: 3%;
-        width: min(48%, 34vh);
-        max-height: 68%;
-    }
-
-    .songs-couple-img {
-        left: 17%;
-        bottom: 0;
-        width: min(82%, 56vh);
-        max-height: 72%;
-    }
+    .songs-body-img { left: 13.5%; height: 105%; }
+    .songs-hand-img { left: 36.9%; bottom: 15%; height: 80%; }
 
     .art-placeholder {
         height: 220px;
@@ -786,14 +761,14 @@ body {
     height: 94vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    gap: 16px;
+    gap: 0;
 }
 
-/* Upper Japanese Clock */
 .japanese-clock-box {
     position: relative;
+    z-index: 2;
     width: 100%;
     background-color: #f3e5c8;
     background-image:
@@ -809,6 +784,51 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.counter-art-zone {
+    position: relative;
+    width: min(92vw, 1000px);
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: visible;
+}
+
+.counter-side-lantern {
+    position: absolute;
+    bottom: 5%;
+    width: 40%;
+    height: auto;
+    filter: drop-shadow(0 8px 14px rgba(30, 12, 8, 0.2));
+    z-index: 0;
+}
+
+.counter-side-lantern-left { left: -22%; }
+.counter-side-lantern-right { right: -22%; }
+
+.counter-art-img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    width: auto;
+    height: 100%;
+    max-width: 92vw;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 14px rgba(30, 12, 8, 0.2));
+    animation: counterLoversSway 7s ease-in-out infinite;
+}
+
+.counter-lovers-img {
+    top: -2vh;
+    bottom: auto;
+    height: 96vh;
+    z-index: 1;
+}
+
+@keyframes counterLoversSway {
+    0%, 100% { transform: translateX(calc(-50% - 8px)); }
+    50% { transform: translateX(calc(-50% + 8px)); }
 }
 
 .clock-scroll-rod {
@@ -905,7 +925,6 @@ body {
     opacity: 0.9;
 }
 
-/* Live Time Units Grid */
 .clock-units-wrapper {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -1077,10 +1096,28 @@ body {
 .reason-scroll:nth-child(4n) { transform: rotate(1deg) translateY(-2px); }
 
 .reasons-art-space {
-    flex: 1 1 30vh;
-    min-height: 220px;
+    position: relative;
+    flex: 1 0 clamp(190px, 27vh, 290px);
+    min-height: 190px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    align-items: end;
+    justify-items: center;
     pointer-events: none;
 }
+
+.reasons-art-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 14px rgba(30, 12, 8, 0.2));
+}
+
+.reasons-lantern { animation: lanternsFloat 5.8s ease-in-out infinite; }
+.reasons-lantern-right { animation-delay: -2.9s; }
+.reasons-couple { animation: coupleBoatSway 6.4s ease-in-out infinite; }
 
 @media (max-width: 900px) {
     .reasons-scrolls {
@@ -1128,13 +1165,14 @@ body {
         font-size: 0.9rem;
     }
 
-    .reasons-art-space {
-        flex-basis: 32vh;
-        min-height: 230px;
-    }
+    .reasons-art-space { flex-basis: 30vh; min-height: 190px; }
+
+    .counter-container { height: auto; min-height: 94vh; }
+    .counter-art-zone { height: 42vh; flex: 0 0 42vh; }
+    .counter-lovers-img { top: 2vh; height: 58vh; }
 }
 
-/*SCREEN 5 LETTER*/
+/* SCREEN 6: LETTER */
 
 #letter-screen {
     background: url('/images/landing-bg.png') no-repeat center center;
@@ -1370,7 +1408,6 @@ body {
     }
 }
 
-
 @keyframes balanceoPiernaSentada {
     0% {
         transform: rotate(1deg);
@@ -1382,8 +1419,6 @@ body {
         transform: rotate(1deg);
     }
 }
-
-/* Dancing animation */
 
 @keyframes gentleDance {
     0%, 100% {
